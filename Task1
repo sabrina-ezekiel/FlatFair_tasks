@@ -1,0 +1,18 @@
+select --agent_id, a.customer_id--, sales_date
+ sum(sales_amount) as Sales_amount,  country--, dob--, start_date,End_date,current_record
+,case when dob between '2009-10-30' and '2019-10-30'then '0-9 Years'
+when dob between '1999-10-29' and '2009-10-29' then '10-19 Years'
+when dob between '1989-10-28' and '1999-10-28' then '20-29 Years'
+when dob between '1979-10-27' and '1989-10-27' then '30-39 Years'
+when dob between '1969-10-26' and '1979-10-26' then '40-49 Years'
+when dob between '1959-10-25' and '1969-10-25' then '50-59 Years'
+when dob between '1949-10-24' and '1959-10-24' then '60-69 Years'
+when dob between '1939-10-23' and '1949-10-23' then '70-79 Years'
+when dob between '1929-10-22' and '1939-10-22' then '80-89 Years'
+else 'Another' 
+end  Year_group
+from test.f_sales a
+left outer join test.d_customer b
+on a.customer_id = b.customer_id
+--where dob  = '1950-12-22'
+group by agent_id, a.customer_id, sales_date,  country, dob, start_date,End_date,current_record, year_group
